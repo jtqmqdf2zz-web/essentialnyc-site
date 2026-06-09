@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Practice — Essential</title>
+  <meta name="description" content="The Essential model in one page: design your Do Loops. Seven activities, three meanings, three programs — small shifts that compound into a well-designed life." />
+
+  <link rel="stylesheet" href="https://use.typekit.net/lbu6ooe.css" />
+  <link rel="stylesheet" href="https://use.typekit.net/zxr3mbw.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="icon" href="icons/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="icons/favicon-16.png" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <link rel="manifest" href="icons/site.webmanifest" />
+  <meta name="theme-color" content="#dbd2c0" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="shape-pebble" viewBox="0 0 200 160">
+        <path d="M 40 30 C 20 50, 15 90, 35 120 C 60 155, 120 155, 160 130 C 195 108, 190 60, 160 35 C 125 8, 65 8, 40 30 Z" fill="currentColor" />
+      </symbol>
+      <symbol id="shape-wedge" viewBox="0 0 240 160">
+        <path d="M 20 140 C 20 60, 80 20, 160 20 C 200 20, 220 40, 220 60 C 220 100, 180 140, 100 140 Z" fill="currentColor" />
+      </symbol>
+      <symbol id="shape-horizon" viewBox="0 0 800 80" preserveAspectRatio="none">
+        <path d="M 0 40 C 80 30, 160 48, 240 36 C 320 24, 400 50, 480 38 C 560 28, 640 46, 720 36 L 800 36 L 800 80 L 0 80 Z" fill="currentColor" />
+      </symbol>
+      <symbol id="shape-torncircle" viewBox="0 0 200 200">
+        <path d="M 100 12 C 50 12, 12 50, 12 100 C 12 150, 50 188, 100 188 C 150 188, 188 150, 188 100 C 188 50, 150 12, 100 12 Z M 100 22 C 142 22, 178 58, 178 100 C 178 142, 142 178, 100 178 C 58 178, 22 142, 22 100 C 22 58, 58 22, 100 22 Z" fill="currentColor" opacity="0.4" />
+        <circle cx="100" cy="100" r="52" fill="currentColor" />
+      </symbol>
+      <symbol id="arrow-right" viewBox="0 0 26 10">
+        <path d="M 0 5 L 24 5 M 19 1 L 24 5 L 19 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+      </symbol>
+      <symbol id="arrow-thin" viewBox="0 0 18 8">
+        <path d="M 0 4 L 16 4 M 12 1 L 16 4 L 12 7" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+      </symbol>
+    </defs>
+  </svg>
+
+  <div id="top" class="page">
+
+    <!-- =============== Nav =============== -->
+    <header class="nav" data-screen-label="Nav">
+      <a href="index.html" class="nav-mark" aria-label="Essential home"><span data-wordmark></span></a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="practice.html" class="is-current">Practice</a>
+        <a href="videos.html">Videos</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <a href="videos.html" class="nav-cta">
+        <span class="nav-cta-dot"></span>
+        <span>Watch</span>
+      </a>
+      <button type="button" class="nav-burger" aria-expanded="false" aria-controls="nav-mobile" aria-label="Open menu">
+        <span class="burger-label">Menu</span>
+        <span class="bars" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+    </header>
+
+    <div id="nav-mobile" class="nav-mobile" data-open="false" aria-hidden="true">
+      <nav class="nav-mobile-links" aria-label="Primary">
+        <a href="practice.html" class="is-current"><span class="idx">01</span><span>Practice</span></a>
+        <a href="videos.html"><span class="idx">02</span><span>Videos</span></a>
+        <a href="about.html"><span class="idx">03</span><span>About</span></a>
+        <a href="contact.html"><span class="idx">04</span><span>Contact</span></a>
+      </nav>
+      <div class="nav-mobile-foot">
+        <span>Essential — 2026</span>
+        <span>Live long and well</span>
+      </div>
+    </div>
+
+    <!-- =============== Page hero =============== -->
+    <section class="hero hero-editorial" data-screen-label="Practice · Hero" style="min-height:min(72vh, 740px);padding-top:calc(var(--nav-h) + 60px);padding-bottom:calc(var(--row) * 0.4)">
+      <div id="essential-hero-bg" class="hero-bg" data-video-dir="practice" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <span class="label label-medium stagger" data-stagger-delay="100">— The practice</span>
+        <h1 class="display-lg stagger" data-stagger-delay="240" style="margin-top:24px">
+          Design your <em>Do Loops.</em>
+        </h1>
+        <p class="lede stagger" data-stagger-delay="900" style="margin-top:36px">
+          The whole model on one page. Not a system to manage — a small set of
+          loops you set, run, and let become the new automatic.
+        </p>
+      </div>
+    </section>
+
+    <!-- =============== The reframe =============== -->
+    <section class="section" data-screen-label="Practice · Reframe">
+      <div class="section-head">
+        <span class="label">Section 01 — The reframe</span>
+        <span class="label label-soft">where it begins</span>
+      </div>
+
+      <div class="manifesto-grid">
+        <div class="manifesto-col-a">
+          <p class="caveat-note"><span class="annot">the one move —</span></p>
+          <h2 class="display-md" style="margin-top:18px">
+            The problem isn't the list. It's the doing.
+          </h2>
+        </div>
+        <div class="manifesto-col-b">
+          <p class="body">
+            There's no shortage of advice about what to do. The hard part has
+            always been the next morning — finding effective things we'll
+            actually keep doing, when the day is already full.
+          </p>
+          <p class="body">
+            Our default patterns are mostly inherited: shaped by habit, by the
+            room we're standing in, by the easiest thing within reach. They run
+            quietly in the background, and they shape the life.
+          </p>
+          <p class="body" style="opacity:0.7">
+            Essential's move is to design the default instead of fighting it.
+            Change the conditions, and the behavior follows on its own.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============== Do Loops =============== -->
+    <section class="section" data-screen-label="Practice · Do Loops">
+      <div class="section-head">
+        <span class="label">Section 02 — Do Loops</span>
+        <span class="label label-soft">default vs. designed</span>
+      </div>
+
+      <div class="manifesto-grid">
+        <div class="manifesto-col-a">
+          <h2 class="display-md">A Do Loop is a designed activity.</h2>
+        </div>
+        <div class="manifesto-col-b">
+          <p class="body">
+            A Do Loop is a small, repeating activity of body, mind, or spirit,
+            placed on purpose toward one of the Essential Activities. Every loop
+            has a <strong>default</strong> state — the way it runs now — and a
+            <strong>designed</strong> state, the version we'd choose.
+          </p>
+          <p class="body">
+            The work is to put the two side by side, change one cheap, low-risk
+            condition, and run the loop until it stops needing attention. Then
+            the next one.
+          </p>
+          <p class="body" style="opacity:0.7">
+            Direct the default to grow your capacity to direct the default.
+            Small shifts, compounding, until tomorrow carries less downside than
+            today.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============== Seven activities =============== -->
+    <section class="section" data-screen-label="Practice · Seven activities">
+      <div class="section-head">
+        <span class="label">Section 03 — Seven activities</span>
+        <span class="label label-soft">what a life is made of</span>
+      </div>
+
+      <div class="vgrid">
+        <div class="vcard" style="cursor:default">
+          <div class="vcard-media">
+            <div class="vcard-shape" style="opacity:0.28"><svg class="shape-svg" viewBox="0 0 200 160"><use href="#shape-pebble" /></svg></div>
+            <div class="vcard-num"><span class="label">01</span></div>
+            <div class="vcard-len"><span class="label">Vital</span></div>
+          </div>
+          <div class="vcard-body">
+            <h4 class="display-xs">Eat</h4>
+            <p class="body" style="margin-top:12px;font-size:15px">What's within reach is what gets eaten. Design the reach.</p>
+          </div>
+        </div>
+
+        <div class="vcard" style="cursor:default">
+          <div class="vcard-media">
+            <div class="vcard-shape" style="opacity:0.38"><svg class="shape-svg" viewBox="0 0 200 200"><use href="#shape-torncircle" /></svg></div>
+            <div class="vcard-num"><span class="label">02</span></div>
+            <div class="vcard-len"><span class="label">Vital</span></div>
+          </div>
+          <div class="vcard-body">
+            <h4 class="display-xs">Move</h4>
+            <p class="body" style="margin-top:12px;font-size:15px">Motion you don't have to schedule, built into where you already are.</p>
+          </div>
+        </div>
+
+        <div class="vcard" style="cursor:default">
+          <div class="vcard-media">
+            <div class="vcard-shape" style="opacity:0.24"><svg class="shape-svg" viewBox="0 0 240 160"><use href="#shape-wedge" /></svg></div>
+            <div class="vcard-num"><span class="label">03</span></div>
+            <div class="vcard-len"><span class="label">Vital</span></div>
+          </div>
+          <div class="vcard-body">
+            <h4 class="display-xs">Restore</h4>
+            <p class="body" style="margin-top:12px;font-size:15px">Recovery treated as part of the loop, not the thing you skip.</p>
+          </div>
+        </div>
+
+        <div class="vcard" style="cursor:default">
+          <div class="vcard-media">
+            <div class="vcard-shape" style="opacity:0.28"><svg class="shape-svg" viewBox="0 0 200 160"><use href="#shape-pebble" /></svg></div>
+            <div class="vcard-num"><span class="label">04</span></div>
+            <div class="vcard-len"><span class="label">Vital</span></div>
+          </div>
+          <div class="vcard-body">
+            <h4 class="display-xs">Sleep</h4>
+            <p class="body" style="margin-top:12px;font-size:15px">The night, designed — the room and the hour, not the trying.</p>
+          </div>
+        </div>
+
+        <div class="vcard" style="cursor:default">
+          <div class="vcard-media">
+            <div class="vcard-shape" style="opacity:0.38"><svg class="shape-svg" viewBox="0 0 200 200"><use href="#shape-torncircle" /></svg></div>
+            <div class="vcard-num"><span class="label">05</span></div>
+            <div class="vcard-len"><span class="label">Directed</span></div>
+          </div>
+          <div class="vcard-body">
+            <h4 class="display-xs">Create</h4>
+            <p class="body" style="margin-top:12px;font-size:15px">Make something that's yours, on a cadence you can keep.</p>
+          </div>
+        </div>
+
+        <div class="vcard" style="cursor:default">
+          <div class="vcard-media">
+            <div class="vcard-shape" style="opacity:0.24"><svg class="shape-svg" viewBox="0 0 240 160"><use href="#shape-wedge" /></svg></div>
+            <div class="vcard-num"><span class="label">06</span></div>
+            <div class="vcard-len"><span class="label">Directed</span></div>
+          </div>
+          <div class="vcard-body">
+            <h4 class="display-xs">Grow</h4>
+            <p class="body" style="margin-top:12px;font-size:15px">Small skills and structures that quietly compound over time.</p>
+          </div>
+        </div>
+
+        <div class="vcard" style="cursor:default">
+          <div class="vcard-media">
+            <div class="vcard-shape" style="opacity:0.28"><svg class="shape-svg" viewBox="0 0 200 160"><use href="#shape-pebble" /></svg></div>
+            <div class="vcard-num"><span class="label">07</span></div>
+            <div class="vcard-len"><span class="label">Well</span></div>
+          </div>
+          <div class="vcard-body">
+            <h4 class="display-xs">Connect</h4>
+            <p class="body" style="margin-top:12px;font-size:15px">The people who hold it up — kept on the calendar, on purpose.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============== Three meanings =============== -->
+    <section class="section" data-screen-label="Practice · Three meanings">
+      <div class="section-head">
+        <span class="label">Section 04 — Three meanings</span>
+        <span class="label label-soft">one word, said three ways</span>
+      </div>
+
+      <div class="manifesto-grid">
+        <div class="manifesto-col-a">
+          <h2 class="display-md">Live <em>vital.</em> Live <em>directed.</em> Live <em>well.</em></h2>
+        </div>
+        <div class="manifesto-col-b">
+          <p class="body">
+            <strong>Live vital.</strong> Bodily capacity — energy and resilience,
+            the condition that makes everything else possible. Mostly Eat, Move,
+            Restore, Sleep.
+          </p>
+          <p class="body">
+            <strong>Live directed.</strong> The ability to steer your own life —
+            agency and leverage. Mostly Create, Grow, Connect.
+          </p>
+          <p class="body">
+            <strong>Live well.</strong> The why that makes it worth doing —
+            purpose, values, the people in it.
+          </p>
+          <p class="body" style="opacity:0.7">
+            One word — <em>Live</em> — said three ways. Live long and well.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============== Three programs =============== -->
+    <section class="section" data-screen-label="Practice · Three programs">
+      <div class="section-head">
+        <span class="label">Section 05 — Three programs</span>
+        <span class="label label-soft">built in order</span>
+      </div>
+
+      <div class="vgrid">
+        <div class="vcard" style="cursor:default">
+          <div class="vcard-media">
+            <div class="vcard-shape" style="opacity:0.28"><svg class="shape-svg" viewBox="0 0 200 160"><use href="#shape-pebble" /></svg></div>
+            <div class="vcard-num"><span class="label">01</span></div>
+            <div class="vcard-len"><span class="label">~6 months</span></div>
+          </div>
+          <div class="vcard-body">
+            <h4 class="display-xs">Stabilize</h4>
+            <p class="body" style="margin-top:12px;font-size:15px">Ease the patterns working against you, so things stop sliding. Pull the weeds first.</p>
+          </div>
+        </div>
+
+        <div class="vcard" style="cursor:default">
+          <div class="vcard-media">
+            <div class="vcard-shape" style="opacity:0.38"><svg class="shape-svg" viewBox="0 0 200 200"><use href="#shape-torncircle" /></svg></div>
+            <div class="vcard-num"><span class="label">02</span></div>
+            <div class="vcard-len"><span class="label">~6 months</span></div>
+          </div>
+          <div class="vcard-body">
+            <h4 class="display-xs">Build</h4>
+            <p class="body" style="margin-top:12px;font-size:15px">Set strong, repeating loops across the seven activities — running on their own.</p>
+          </div>
+        </div>
+
+        <div class="vcard" style="cursor:default">
+          <div class="vcard-media">
+            <div class="vcard-shape" style="opacity:0.24"><svg class="shape-svg" viewBox="0 0 240 160"><use href="#shape-wedge" /></svg></div>
+            <div class="vcard-num"><span class="label">03</span></div>
+            <div class="vcard-len"><span class="label">~6 months</span></div>
+          </div>
+          <div class="vcard-body">
+            <h4 class="display-xs">Compound</h4>
+            <p class="body" style="margin-top:12px;font-size:15px">Find the moves that serve several activities at once, so they multiply rather than add.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============== CTA =============== -->
+    <section class="section" data-screen-label="Practice · Start">
+      <div class="manifesto-grid">
+        <div class="manifesto-col-a">
+          <p class="caveat-note"><span class="annot">— where to start</span></p>
+          <h2 class="display-md" style="margin-top:18px">Start with a door.</h2>
+        </div>
+        <div class="manifesto-col-b">
+          <p class="body">
+            Most people don't arrive at the whole model — they arrive at one
+            thing they care about. That's the right way in. Pick the activity
+            that's on your mind, watch the short video, try one loop.
+          </p>
+          <div style="display:flex;gap:28px;align-items:center;margin-top:34px;flex-wrap:wrap">
+            <a class="btn-primary" href="videos.html">
+              <span>Find a door</span>
+              <svg width="26" height="10"><use href="#arrow-right" /></svg>
+            </a>
+            <a class="btn-ghost" href="about.html">About Essential</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============== Footer =============== -->
+    <footer class="footer" data-screen-label="Footer">
+      <div class="footer-stroke"></div>
+
+      <div class="palette-strip">
+        <div class="palette-strip-meta">
+          <span class="label label-soft" data-palette-id-target>Palette — EST-08</span>
+          <div class="palette-name" data-palette-name-target>Cream / Black</div>
+          <p class="body" style="margin-top:10px;opacity:0.7;font-size:13px">
+            The EST color library — choose yours…
+          </p>
+        </div>
+        <div class="dots" id="theme-dots" role="radiogroup" aria-label="Color theme"></div>
+      </div>
+
+      <div class="footer-grid">
+        <div>
+          <span data-wordmark></span>
+          <p class="body" style="margin-top:22px;max-width:360px;opacity:0.75">
+            A design practice for the activities that make a life. Lived in
+            public.
+          </p>
+        </div>
+        <div>
+          <span class="label label-soft">Essential</span>
+          <ul class="flink">
+            <li><a href="practice.html">Practice</a></li>
+            <li><a href="videos.html">Videos</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <span class="label label-soft">Elsewhere</span>
+          <ul class="flink">
+            <li><a href="https://www.youtube.com/@essential_nyc">YouTube</a></li>
+            <li><a href="https://www.instagram.com/essential_nyc">Instagram</a></li>
+            <li><a href="index.html#newsletter">The note</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-base">
+        <span class="label label-soft">© 2026 Essential</span>
+        <span class="label label-soft">Live long and well</span>
+        <span class="label label-soft">Made by hand</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="app.js"></script>
+  <script src="hero-bg.js"></script>
+</body>
+</html>

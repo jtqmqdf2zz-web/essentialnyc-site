@@ -1,0 +1,12 @@
+{
+  "name": "Essential",
+  "short_name": "Essential",
+  "description": "A design practice for the activities that make a life.",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#dbd2c0",
+  "background_color": "#dbd2c0",
+  "display": "standalone"
+}
