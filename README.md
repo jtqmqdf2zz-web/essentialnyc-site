@@ -50,6 +50,6 @@ Cloudflare Pages, repo `jtqmqdf2zz-web/essentialnyc-site`, custom domain
 **https://essential.nyc**. Deploy = `git push` to `main`; the Pages project
 auto-builds on push. Tracked in the Web Hosting DB (row "Essential.nyc").
 
-This is a duplicate of the Essential site (essn.tl) for the Essential NYC
+This is a duplicate of the original Essential site for the Essential NYC
 property, with the domain swapped to essential.nyc. The wordmark is held at
 "Essential" — same brand system, no "NYC" in the visual identity for now.
