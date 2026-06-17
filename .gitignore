@@ -7,3 +7,10 @@ node_modules/
 
 # Dev scaffolding, not for deploy
 test/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
