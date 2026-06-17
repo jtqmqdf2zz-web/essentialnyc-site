@@ -9,18 +9,69 @@
    Body/UI  — Runda 400 / 500 (Typekit zxr3mbw)
    Gestural — Caveat (Google Fonts), working notes and asides only */
 :root {
+  /* ===================================================================
+     DESIGN TOKENS — every value below is live-editable through the
+     Parameters Tool (load any page with ?gg-edit=1). Fluid type/spacing
+     is expressed as a min (mobile floor) + max (desktop ceiling) pair
+     with the vw interpolation kept inline, so the tool's Mobile/Desktop
+     columns map onto the clamp() bounds directly.
+     =================================================================== */
+
+  /* ---- Type families (swappable live; 'text' rows in the tool) ---- */
   --display: 'aurea-ultra', 'Georgia', serif;
   --serif:   'runda', 'Georgia', serif;
   --sans:    'runda', 'Söhne', 'Helvetica Neue', system-ui, sans-serif;
   --annot:   'Caveat', 'Homemade Apple', cursive;
 
-  /* EST-08 — Cream / Black (Essential's primary polarity). The theme picker
-     swaps these at runtime; the layout works against any EST pair. */
+  /* ---- Color / texture ----
+     --bg / --text are theme-driven (EST-08 Cream/Black default; the theme
+     picker swaps them at runtime, so tool edits to these are preview-only).
+     The texture intensities below are NOT theme-driven and stick. */
   --bg: #dbd2c0;
   --text: #262626;
+  --grain-opacity: 0.08;    /* paper grain (body::after) */
+  --drift-opacity: 0.85;    /* gradient drift wash (body::before) */
+  --page-bg-wash: 0.40;     /* <good-gradient> legibility wash (.page-bg::after) */
 
-  --pad-x: clamp(32px, 6vw, 120px);
-  --row: clamp(80px, 10vw, 140px);
+  /* ---- Display type scale (min / vw / max) ---- */
+  --fs-display-min: 52px;     --fs-display-max: 124px;
+  --fs-display-lg-min: 44px;  --fs-display-lg-max: 100px;
+  --fs-display-md-min: 32px;  --fs-display-md-max: 60px;
+  --fs-display-sm-min: 26px;  --fs-display-sm-max: 42px;
+  --fs-display-xs-min: 19px;  --fs-display-xs-max: 24px;
+
+  /* ---- Editorial type ---- */
+  --fs-lede-min: 22px;        --fs-lede-max: 34px;
+  --fs-pitch-min: 22px;       --fs-pitch-max: 30px;
+  --fs-body: 15px;            /* running .body copy */
+  --fs-label: 12px;           /* eyebrow / .label */
+  --fs-annot: 22px;           /* Caveat asides */
+
+  /* ---- Wordmark sizing (SVG width) ---- */
+  --wordmark-nav-w: 180px;    /* nav lockup */
+  --wordmark-footer-w: 125px; /* footer lockup */
+
+  /* ---- Horizontal spacing ---- */
+  --pad-x-min: 32px;          --pad-x-max: 120px;   /* page gutter */
+  --pad-x: clamp(var(--pad-x-min), 6vw, var(--pad-x-max));
+
+  /* ---- Vertical spacing ---- */
+  --row-min: 80px;            --row-max: 140px;     /* section rhythm */
+  --row: clamp(var(--row-min), 10vw, var(--row-max));
+  --hero-pad-top-min: 100px;  --hero-pad-top-max: 100px;  /* hero top inset */
+  --section-head-mb-min: 48px;--section-head-mb-max: 96px; /* below section heads */
+
+  /* ---- Navigation ---- */
+  --nav-pad-y: 28px;          /* nav vertical padding */
+  --nav-links-gap: 40px;      /* gap between nav links */
+  --nav-link-size: 12.5px;    /* nav link / CTA label size */
+  --nav-link-tracking: 0.22em;/* nav link letterspacing */
+  --nav-cta-pad-y: 10px;      --nav-cta-pad-x: 18px; /* CTA pill padding */
+
+  /* ---- Gaps ---- */
+  --hero-meta-gap: 60px;      /* between hero meta items */
+  --manifesto-gap-min: 40px;  --manifesto-gap-max: 120px; /* two-col editorial */
+  --footer-grid-gap-min: 30px;--footer-grid-gap-max: 80px; /* footer columns */
 }
 
 * { box-sizing: border-box; }
@@ -48,7 +99,7 @@ body::before {
     radial-gradient(ellipse 50% 40% at 82% 28%, color-mix(in oklab, currentColor 14%, transparent) 0%, transparent 65%),
     radial-gradient(ellipse 65% 50% at 55% 88%, color-mix(in oklab, currentColor 18%, transparent) 0%, transparent 62%),
     radial-gradient(ellipse 45% 35% at 38% 55%, color-mix(in oklab, currentColor 11%, transparent) 0%, transparent 70%);
-  opacity: .85;
+  opacity: var(--drift-opacity, .85);
   animation: drift 16s ease-in-out infinite alternate;
 }
 body::after {
@@ -60,7 +111,7 @@ body::after {
   z-index: 1;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   background-repeat: repeat;
-  opacity: .08;
+  opacity: var(--grain-opacity, .08);
   mix-blend-mode: multiply;
 }
 .page { position: relative; z-index: 2; }
@@ -69,6 +120,43 @@ body::after {
   33%  { transform: translate3d(3%, -2%, 0) scale(1.08); }
   66%  { transform: translate3d(-2.5%, 2%, 0) scale(1.05); }
   100% { transform: translate3d(1.5%, -1%, 0) scale(1.1); }
+}
+
+/* ------- Page background field (Order 250) -------
+   Two background layers, bottom to top:
+     1. SOLID — the theme color. `body { background: var(--bg) }` (set by the
+        page's code via app.js). Always present, so there is never a gap or seam.
+     2. GRADIENT — this .page-bg layer, a fixed full-bleed <good-gradient> whose
+        `colors` are baked per page (picked in the gradient tool, ?gg-edit=1),
+        sitting ABOVE the solid color. A light var(--bg) wash (--page-bg-wash)
+        tints it back
+        toward the solid color just enough to keep text legible while the
+        gradient stays clearly visible.
+   Then: paper grain (body::after, z-index:1) → content (.page, z-index:2). The
+   opaque WebGL canvas covers the body::before drift (kept as the no-JS / no-WebGL
+   fallback; the component also paints a CSS gradient fallback if WebGL is out). */
+.page-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.page-bg good-gradient {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.page-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  opacity: var(--page-bg-wash, 0.40);
+  pointer-events: none;
+  transition: background-color 700ms cubic-bezier(.2,.6,.2,1);
 }
 
 a { color: inherit; text-decoration: none; }
@@ -83,27 +171,27 @@ a { color: inherit; text-decoration: none; }
   margin: 0;
 }
 .display {
-  font-size: clamp(52px, 8.4vw, 124px);
+  font-size: clamp(var(--fs-display-min), 8.4vw, var(--fs-display-max));
   line-height: 0.96;
   letter-spacing: -0.02em;
 }
 .display-lg {
-  font-size: clamp(44px, 7vw, 100px);
+  font-size: clamp(var(--fs-display-lg-min), 7vw, var(--fs-display-lg-max));
   line-height: 1;
   letter-spacing: -0.02em;
 }
 .display-md {
-  font-size: clamp(32px, 4.4vw, 60px);
+  font-size: clamp(var(--fs-display-md-min), 4.4vw, var(--fs-display-md-max));
   line-height: 1.04;
   letter-spacing: -0.018em;
 }
 .display-sm {
-  font-size: clamp(26px, 3.2vw, 42px);
+  font-size: clamp(var(--fs-display-sm-min), 3.2vw, var(--fs-display-sm-max));
   line-height: 1.1;
   letter-spacing: -0.015em;
 }
 .display-xs {
-  font-size: clamp(19px, 2vw, 24px);
+  font-size: clamp(var(--fs-display-xs-min), 2vw, var(--fs-display-xs-max));
   line-height: 1.18;
   letter-spacing: -0.01em;
 }
@@ -117,7 +205,7 @@ a { color: inherit; text-decoration: none; }
 .lede {
   font-family: var(--sans);
   font-weight: 400;
-  font-size: clamp(22px, 2.6vw, 34px);
+  font-size: clamp(var(--fs-lede-min), 2.6vw, var(--fs-lede-max));
   line-height: 1.4;
   max-width: min(900px, 92%);
   margin: 40px 0 0;
@@ -139,7 +227,7 @@ a { color: inherit; text-decoration: none; }
 .body {
   font-family: var(--sans);
   font-weight: 400;
-  font-size: 15px;
+  font-size: var(--fs-body);
   line-height: 1.72;
   margin: 0 0 18px;
   max-width: 560px;
@@ -147,7 +235,7 @@ a { color: inherit; text-decoration: none; }
 .pitch {
   font-family: var(--sans);
   font-weight: 400;
-  font-size: clamp(22px, 2.1vw, 30px);
+  font-size: clamp(var(--fs-pitch-min), 2.1vw, var(--fs-pitch-max));
   line-height: 1.4;
   margin: 0;
 }
@@ -161,7 +249,7 @@ a { color: inherit; text-decoration: none; }
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  padding: 22px var(--pad-x);
+  padding: var(--nav-pad-y) var(--pad-x);
   background: transparent;
 }
 .nav-mark { color: currentColor; display: inline-flex; }
@@ -175,19 +263,19 @@ a { color: inherit; text-decoration: none; }
   color: currentColor;
 }
 .wordmark-slot { display: inline-flex; color: currentColor; }
-.nav-mark .wordmark-slot svg { width: 112px; }
-.footer .wordmark-slot svg { width: 64px; }
+.nav-mark .wordmark-slot svg { width: var(--wordmark-nav-w); }
+.footer .wordmark-slot svg { width: var(--wordmark-footer-w); }
 
 .nav-links {
   display: flex;
-  gap: 40px;
+  gap: var(--nav-links-gap);
   justify-self: center;
 }
 .nav-links a {
   font-family: var(--sans);
-  font-size: 12.5px;
+  font-size: var(--nav-link-size);
   font-weight: 500;
-  letter-spacing: 0.22em;
+  letter-spacing: var(--nav-link-tracking);
   text-transform: uppercase;
   opacity: 1;
   transition: opacity .3s;
@@ -214,11 +302,11 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   gap: 10px;
   font-family: var(--sans);
-  font-size: 12.5px;
+  font-size: var(--nav-link-size);
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  padding: 10px 18px;
+  padding: var(--nav-cta-pad-y) var(--nav-cta-pad-x);
   border: 1px solid currentColor;
   border-radius: 999px;
   transition: background .3s, color .3s;
@@ -347,39 +435,16 @@ body.nav-open { overflow: hidden; }
 .hero {
   position: relative;
   min-height: 100vh;
-  padding: clamp(140px, 14vw, 220px) var(--pad-x) clamp(40px, 6vw, 80px);
+  padding: clamp(var(--hero-pad-top-min), 14vw, var(--hero-pad-top-max)) var(--pad-x) clamp(40px, 6vw, 80px);
   overflow: hidden;
   display: flex;
   margin-top: calc(var(--nav-h, 76px) * -1);
   flex-direction: column;
   justify-content: center;
 }
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-.hero-bg video.hero-video {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: var(--bg-opacity, 0.55);
-  filter: saturate(var(--bg-sat, 0.85)) blur(var(--bg-blur, 0px));
-  transition: opacity 400ms ease, filter 400ms ease;
-}
-.hero-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--bg);
-  opacity: var(--bg-wash, 0.55);
-  mix-blend-mode: normal;
-  pointer-events: none;
-  transition: opacity 400ms ease;
-}
+/* The hero shows the same global .page-bg gradient field as the rest of the
+   page (the video hero-bg layer + its lightening wash were removed so the
+   gradient reads uniformly the full length of every page). */
 .hero > .hero-copy,
 .hero > .hero-meta,
 .hero > .stroke-bar { z-index: 2; position: relative; }
@@ -397,7 +462,7 @@ body.nav-open { overflow: hidden; }
 .hero-meta {
   margin-top: 24px;
   display: flex;
-  gap: 60px;
+  gap: var(--hero-meta-gap);
   flex-wrap: wrap;
 }
 
@@ -481,7 +546,7 @@ body.nav-open { overflow: hidden; }
   align-items: center;
   border-top: 2px solid currentColor;
   padding-top: 22px;
-  margin-bottom: clamp(48px, 7vw, 96px);
+  margin-bottom: clamp(var(--section-head-mb-min), 7vw, var(--section-head-mb-max));
   opacity: 0.9;
 }
 .more-link {
@@ -495,7 +560,7 @@ body.nav-open { overflow: hidden; }
 
 .label {
   font-family: var(--sans);
-  font-size: 12px;
+  font-size: var(--fs-label);
   font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -505,7 +570,7 @@ body.nav-open { overflow: hidden; }
 
 .annot {
   font-family: var(--annot);
-  font-size: 22px;
+  font-size: var(--fs-annot);
   font-weight: 500;
   line-height: 1;
   opacity: 0.85;
@@ -515,7 +580,7 @@ body.nav-open { overflow: hidden; }
 .manifesto-grid {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
-  gap: clamp(40px, 6vw, 120px);
+  gap: clamp(var(--manifesto-gap-min), 6vw, var(--manifesto-gap-max));
   align-items: start;
 }
 .manifesto-col-b { padding-top: 12px; }
@@ -633,50 +698,13 @@ body.nav-open { overflow: hidden; }
 .footer-grid {
   display: grid;
   grid-template-columns: 1.3fr 1fr 1fr 1.4fr;
-  gap: clamp(30px, 4vw, 80px);
+  gap: clamp(var(--footer-grid-gap-min), 4vw, var(--footer-grid-gap-max));
   padding: clamp(60px, 7vw, 100px) 0 clamp(40px, 5vw, 70px);
 }
 .flink { list-style: none; padding: 0; margin: 14px 0 0; }
 .flink li { padding: 6px 0; font-size: 14px; }
 .flink a { opacity: 0.8; transition: opacity .3s, padding-left .3s; display: inline-block; }
 .flink a:hover { opacity: 1; padding-left: 6px; }
-
-.palette-strip {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(30px, 5vw, 80px);
-  align-items: center;
-  padding: clamp(40px, 5vw, 70px) 0 clamp(36px, 4vw, 60px);
-  border-bottom: 1px solid color-mix(in oklab, currentColor 25%, transparent);
-}
-.palette-strip .dots { grid-template-columns: repeat(11, 1fr); max-width: 620px; justify-self: end; gap: 18px; }
-.palette-name {
-  font-family: var(--display);
-  font-size: 28px;
-  font-weight: 400;
-  font-style: italic;
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-  margin-top: 6px;
-}
-
-.dots { display: grid; grid-template-columns: repeat(11, 1fr); gap: 18px; max-width: 620px; }
-.dot {
-  width: 100%;
-  aspect-ratio: 1;
-  min-width: 34px;
-  min-height: 34px;
-  border-radius: 50%;
-  border: 1.5px solid var(--chip, currentColor);
-  padding: 0;
-  cursor: pointer;
-  position: relative;
-  transition: transform .35s cubic-bezier(.2,.6,.2,1), box-shadow .3s;
-  background: var(--dot-bg, transparent);
-}
-.dot:hover { transform: scale(1.18); box-shadow: 0 0 0 2px var(--chip, currentColor); }
-.dot-active { transform: scale(1.18); box-shadow: 0 0 0 2px var(--chip, currentColor), 0 0 0 5px color-mix(in oklab, currentColor 12%, transparent); }
-.dot-inner { position: absolute; width: 34%; height: 34%; left: 33%; top: 33%; border-radius: 50%; }
 
 .footer-base {
   display: flex;
@@ -810,14 +838,11 @@ body.nav-open { overflow: hidden; }
   .vgrid { grid-template-columns: repeat(2, 1fr); }
   .news-inner { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
-  .palette-strip { grid-template-columns: 1fr; }
-  .palette-strip .dots { justify-self: start; max-width: 100%; }
 }
 @media (max-width: 640px) {
   .vgrid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
   .hero-meta { gap: 24px; }
-  .dots { grid-template-columns: repeat(11, 1fr); }
   .hero-copy .display {
     font-size: clamp(34px, 11vw, 56px);
     letter-spacing: -0.02em;

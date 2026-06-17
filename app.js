@@ -1,7 +1,9 @@
 // Essential — vanilla JS for the editorial chassis.
 // Handles: wordmark injection (themeable inline SVG), staggered intro,
-// mobile nav, the EST theme picker (22 themes, anchored to EST-08,
-// persistent), newsletter form, and the hero-bg intensity preset.
+// mobile nav, the base color polarity (EST-08), and the newsletter form.
+// Color variation across the site comes from the
+// per-page <good-gradient> field (picked in the gradient tool, ?gg-edit=1) —
+// there is no longer a visitor-facing theme picker.
 'use strict';
 
 // ----- Essential wordmark — inline SVG, currentColor fill so it inherits the
@@ -25,9 +27,9 @@ function injectWordmark() {
   });
 }
 
-// ----- EST Theme Library (bg + text pair). Essential anchors EST-08
-// (Cream / Black) and EST-01 (its dark flip). The other themes are the
-// shared registry that Then. and Essential both draw from. -----
+// ----- EST Theme Library (bg + text pair). Essential's base polarity is
+// EST-08 (Cream / Black) — the only one applied now that the picker is gone.
+// The rest stay as the shared EST registry reference (Then. + Essential). -----
 const EST_THEMES = [
   { id: 'EST-08', name: 'Cream / Black',      bg: '#dbd2c0', text: '#262626' },
   { id: 'EST-01', name: 'Black / Cream',      bg: '#262626', text: '#dbd2c0' },
@@ -52,74 +54,21 @@ const EST_THEMES = [
   { id: 'EST-21', name: 'Teal / Yellow',      bg: '#2b937f', text: '#fbd602' },
 ];
 
-const LS_THEME = 'essential.themeId';
 const DEFAULT_THEME_ID = 'EST-08';
 
-// Hero-bg intensity preset. Cream --bg means the wash is a light veil.
-const HERO_BG_PRESET = {
-  '--bg-opacity': '0.62',
-  '--bg-sat':     '0.85',
-  '--bg-blur':    '0.4px',
-  '--bg-wash':    '0.30',
-};
-
 // ============================================================
-// Theme picker
+// Base color polarity
 // ============================================================
-function lum(hex) {
-  const h = hex.replace('#', '');
-  const r = parseInt(h.slice(0, 2), 16) / 255;
-  const g = parseInt(h.slice(2, 4), 16) / 255;
-  const b = parseInt(h.slice(4, 6), 16) / 255;
-  const toLin = (c) => (c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4));
-  return 0.2126 * toLin(r) + 0.7152 * toLin(g) + 0.0722 * toLin(b);
-}
-
+// Apply the site's base color polarity (one fixed theme). The visitor-facing
+// theme picker was removed — color variation now comes from the per-page
+// <good-gradient> field, hand-picked in the gradient tool (?gg-edit=1) and baked
+// into each page. This just sets the solid surface (--bg) and text (--text)
+// beneath that gradient.
 function applyTheme(themeId) {
   const t = EST_THEMES.find((x) => x.id === themeId) || EST_THEMES[0];
   const root = document.documentElement;
   root.style.setProperty('--bg', t.bg);
   root.style.setProperty('--text', t.text);
-  try { localStorage.setItem(LS_THEME, t.id); } catch (e) { /* localStorage may be blocked */ }
-
-  const idEl = document.querySelector('[data-palette-id-target]');
-  const nameEl = document.querySelector('[data-palette-name-target]');
-  if (idEl) idEl.textContent = `Palette — ${t.id}`;
-  if (nameEl) nameEl.textContent = t.name;
-
-  const pageDark = lum(t.bg) < 0.5;
-  document.querySelectorAll('#theme-dots .dot').forEach((btn) => {
-    const id = btn.getAttribute('data-theme-id');
-    const dt = EST_THEMES.find((x) => x.id === id);
-    if (!dt) return;
-    const bgL = lum(dt.bg), tL = lum(dt.text);
-    const chip = pageDark ? (bgL > tL ? dt.bg : dt.text) : (bgL < tL ? dt.bg : dt.text);
-    btn.style.setProperty('--chip', chip);
-    btn.classList.toggle('dot-active', id === t.id);
-    btn.setAttribute('aria-checked', id === t.id ? 'true' : 'false');
-  });
-}
-
-function buildThemeDots() {
-  const host = document.getElementById('theme-dots');
-  if (!host) return;
-  EST_THEMES.forEach((t) => {
-    const btn = document.createElement('button');
-    btn.className = 'dot';
-    btn.type = 'button';
-    btn.setAttribute('role', 'radio');
-    btn.setAttribute('aria-label', `${t.id} — ${t.name}`);
-    btn.setAttribute('data-theme-id', t.id);
-    btn.style.background = t.bg;
-
-    const inner = document.createElement('span');
-    inner.className = 'dot-inner';
-    inner.style.background = t.text;
-    btn.appendChild(inner);
-
-    btn.addEventListener('click', () => applyTheme(t.id));
-    host.appendChild(btn);
-  });
 }
 
 // ============================================================
@@ -195,14 +144,6 @@ function publishNavHeight() {
   document.documentElement.style.setProperty('--nav-h', h + 'px');
 }
 
-function applyHeroBgPreset() {
-  document.querySelectorAll('.hero-bg').forEach((el) => {
-    for (const [k, v] of Object.entries(HERO_BG_PRESET)) {
-      el.style.setProperty(k, v);
-    }
-  });
-}
-
 // ============================================================
 // Staggered intro
 // ============================================================
@@ -220,17 +161,10 @@ function runStagger() {
 // ============================================================
 function init() {
   injectWordmark();
-  buildThemeDots();
-  let initialThemeId = DEFAULT_THEME_ID;
-  try {
-    const saved = localStorage.getItem(LS_THEME);
-    if (saved && EST_THEMES.find((x) => x.id === saved)) initialThemeId = saved;
-  } catch (e) { /* ignore */ }
-  applyTheme(initialThemeId);
+  applyTheme(DEFAULT_THEME_ID);
 
   setupMobileNav();
   setupNewsletter();
-  applyHeroBgPreset();
   publishNavHeight();
   setTimeout(publishNavHeight, 80);
   window.addEventListener('resize', publishNavHeight);

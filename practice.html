@@ -47,6 +47,13 @@
     </defs>
   </svg>
 
+  <!-- Page background field (Order 250). The <good-gradient> colors are baked
+       per page — pick them in the gradient tool (?gg-edit=1) and paste the
+       markup here. All gradient settings are static per page. -->
+  <div class="page-bg">
+    <good-gradient colors="#dbd2c0,#3c7066,#262626" speed="0.03" scale="0.01" contrast="1.33" cycles="1.6" seed="3" start="47"></good-gradient>
+  </div>
+
   <div id="top" class="page">
 
     <!-- =============== Nav =============== -->
@@ -83,7 +90,6 @@
 
     <!-- =============== Page hero =============== -->
     <section class="hero hero-editorial" data-screen-label="Practice · Hero" style="min-height:min(72vh, 740px);padding-top:calc(var(--nav-h) + 60px);padding-bottom:calc(var(--row) * 0.4)">
-      <div id="essential-hero-bg" class="hero-bg" data-video-dir="practice" aria-hidden="true"></div>
       <div class="hero-copy">
         <span class="label label-medium stagger" data-stagger-delay="100">— The practice</span>
         <h1 class="display-lg stagger" data-stagger-delay="240" style="margin-top:24px">
@@ -361,16 +367,6 @@
     <footer class="footer" data-screen-label="Footer">
       <div class="footer-stroke"></div>
 
-      <div class="palette-strip">
-        <div class="palette-strip-meta">
-          <span class="label label-soft" data-palette-id-target>Palette — EST-08</span>
-          <div class="palette-name" data-palette-name-target>Cream / Black</div>
-          <p class="body" style="margin-top:10px;opacity:0.7;font-size:13px">
-            The EST color library — choose yours…
-          </p>
-        </div>
-        <div class="dots" id="theme-dots" role="radiogroup" aria-label="Color theme"></div>
-      </div>
 
       <div class="footer-grid">
         <div>
@@ -408,7 +404,18 @@
 
   </div>
 
-  <script src="app.js"></script>
-  <script src="hero-bg.js"></script>
+  <script src="est-gradient-themes.js"></script>
+  <script src="app.js?v=2"></script>
+  <script type="module" src="good-gradient/good-gradient.js?v=1"></script>
+  <!-- gg-edit background authoring tool — dormant; mounts only on ?gg-edit=1 -->
+  <script>
+    (function () {
+      try { if (new URLSearchParams(location.search).get('gg-edit') !== '1') return; } catch (e) { return; }
+      var s = document.createElement('script');
+      s.type = 'module';
+      s.src = 'gg-edit/gg-edit.js';
+      document.body.appendChild(s);
+    })();
+  </script>
 </body>
 </html>
