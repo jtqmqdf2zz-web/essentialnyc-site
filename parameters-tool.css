@@ -1,0 +1,236 @@
+/* Parameters Tool — dev-only panel UI. Self-contained styles, namespaced
+   under #param-tool to avoid colliding with the host site. Mounts bottom-right
+   (Essential's Background panel sits top-left, so the two never overlap). */
+
+#param-tool {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  width: 460px;
+  max-width: calc(100vw - 32px);
+  max-height: 78vh;
+  background: rgba(20, 20, 20, 0.96);
+  color: #e2e2e0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 12px;
+  line-height: 1.4;
+  z-index: 99999;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+#param-tool * { box-sizing: border-box; }
+
+#param-tool.is-collapsed .param-tool-body { display: none; }
+
+.param-tool-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: rgba(40, 40, 40, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.param-tool-title {
+  flex: 1 1 auto;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #c8c8c5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.param-tool-copy,
+.param-tool-toggle {
+  flex: 0 0 auto;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+.param-tool-copy:hover,
+.param-tool-toggle:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+.param-tool-toggle {
+  width: 24px;
+  padding: 3px 0;
+  text-align: center;
+}
+
+.param-tool-body {
+  overflow-y: auto;
+  padding: 4px 0 8px;
+}
+
+/* ---------- Sections ---------- */
+.param-tool-section + .param-tool-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 4px;
+}
+.param-tool-section-title {
+  margin: 0;
+  padding: 8px 10px 4px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #888;
+}
+
+#param-tool table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#param-tool thead th {
+  text-align: left;
+  font-weight: 500;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #888;
+  padding: 6px 10px 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#param-tool tbody td {
+  padding: 5px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  vertical-align: middle;
+}
+
+#param-tool tbody tr:last-child td { border-bottom: 0; }
+
+.param-tool-col-name { width: 50%; }
+.param-tool-col-val { width: 25%; }
+
+.param-tool-name {
+  font-weight: 400;
+  color: #e2e2e0;
+  cursor: help;
+}
+
+/* ---------- Numeric inputs ---------- */
+.param-tool-input-wrap {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+#param-tool input[type="number"] {
+  width: 52px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: inherit;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+}
+#param-tool input[type="number"]:focus {
+  outline: 0;
+  border-color: rgba(180, 200, 255, 0.6);
+  background: rgba(255, 255, 255, 0.10);
+}
+/* Hide the spin buttons for a cleaner look. */
+#param-tool input[type="number"]::-webkit-inner-spin-button,
+#param-tool input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#param-tool input[type="number"] { -moz-appearance: textfield; }
+
+.param-tool-unit {
+  color: #888;
+  font-size: 11px;
+}
+
+.param-tool-shared {
+  color: #777;
+  font-style: italic;
+  font-size: 11px;
+}
+
+/* ---------- Color rows ---------- */
+.param-tool-color-cell { width: 50%; }
+
+.param-tool-color-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#param-tool input.param-tool-swatch {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 5px;
+  background: none;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+#param-tool input.param-tool-swatch::-webkit-color-swatch-wrapper { padding: 0; }
+#param-tool input.param-tool-swatch::-webkit-color-swatch { border: 0; border-radius: 4px; }
+#param-tool input.param-tool-swatch::-moz-color-swatch { border: 0; border-radius: 4px; }
+
+#param-tool input.param-tool-hex {
+  width: 84px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: inherit;
+  padding: 3px 6px;
+  border-radius: 3px;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  text-transform: lowercase;
+}
+#param-tool input.param-tool-hex:focus {
+  outline: 0;
+  border-color: rgba(180, 200, 255, 0.6);
+  background: rgba(255, 255, 255, 0.10);
+}
+
+/* ---------- Text rows (font-family stacks) ---------- */
+.param-tool-text-cell { width: 100%; }
+#param-tool input.param-tool-text {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: inherit;
+  padding: 4px 6px;
+  border-radius: 3px;
+  font: inherit;
+}
+#param-tool input.param-tool-text:focus {
+  outline: 0;
+  border-color: rgba(180, 200, 255, 0.6);
+  background: rgba(255, 255, 255, 0.10);
+}
+
+@media (max-width: 600px) {
+  #param-tool {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: auto;
+    max-width: 100vw;
+    border-radius: 8px 8px 0 0;
+    max-height: 50vh;
+  }
+}
